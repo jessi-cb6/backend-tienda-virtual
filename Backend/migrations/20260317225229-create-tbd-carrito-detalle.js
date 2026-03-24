@@ -10,7 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_carrito: {
-        type: Sequelize.INTEGER
+        allowNull:false,
+        type: Sequelize.INTEGER,
+        references:{
+          model:'tbb_carritos',
+          key:'id'
+        }
+
       },
       precio_uniario: {
         type: Sequelize.DOUBLE
@@ -19,7 +25,12 @@ module.exports = {
   type: Sequelize.INTEGER 
 },
       id_producto: {
-        type: Sequelize.INTEGER
+        allowNull:false,
+        type: Sequelize.INTEGER,
+        references:{
+          model:'tbc_productos',
+          key:'id'
+        }
       },
       createdAt: {
         allowNull: false,

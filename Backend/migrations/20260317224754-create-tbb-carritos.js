@@ -13,14 +13,19 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       id_usuario: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'tbc_usuarios',
+          key: 'id'
+        }
       },
       fecha_creacion: {
         type: Sequelize.DATE
       },
       total: {
         type: Sequelize.DOUBLE,
-                allowNull:false
+        allowNull: false
 
       },
       createdAt: {
