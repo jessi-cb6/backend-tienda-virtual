@@ -1,29 +1,38 @@
-required('dotenv').config()
+require('dotenv').config()
 
-const express= require('express');
-const logger=require('morgan');
+const express = require('express');
+const logger = require('morgan');
 const bodyParser = require('body-parser');
 
-//tipode servidor que realizaremos//
 const http = require('http');
-const { parse } = require('path');
 
-//iniciar configuracion express
-const app=express();
+const app = express();
 
-//log mostrar informacion en consola
+// logs
 app.use(logger('dev'));
 
-//parsearlas entradas de solicitud de datos
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-//configura las rutas de bienvenida del servidor
-app.get('/',(req, res)=>res.status(200).send({message: 'Bienvenido a la API REST de compras jessi',}))
+app.get('/', (req, res) =>
+  res.status(200).send({
+    message: 'Bienvenido a la API REST de compras jessi',
+  })
+);
 
-const port= parseInt(process.env.PORT,10)||8000;
-app.set('port',port);
-const server =http.createServer(app);
-server.listen(port);
 
-module.exports =app;
+require('./routes/route_categorias')(app);
+require('./routes/route_productos')(app);
+require('./routes/route_usuarios')(app);
+require('./routes/route_carritos')(app);
+require('./routes/route_carrito_detalle')(app);
+
+const port = parseInt(process.env.PORT, 10) || 8000;
+app.set('port', port);
+
+const server = http.createServer(app);
+server.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
+module.exports = app;
